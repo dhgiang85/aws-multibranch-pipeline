@@ -12,9 +12,9 @@ pipeline {
     tools {
         maven 'mymaven'
     }
-    environment {
-        IMAGE_NAME = 'dhgiant/demo-app:jma-2.0'
-    }
+//     environment {
+//         IMAGE_NAME = 'dhgiant/demo-app:jma-2.0'
+//     }
     stages {
        stage('Increase app version') {
               steps {
@@ -25,7 +25,7 @@ pipeline {
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     echo ${matcher}
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "jma-${version}-${BUILD_NUMBER}"
+                    env.IMAGE_NAME = "dhgiant/demo-app:jma-${version}-${BUILD_NUMBER}"
                  }
               }
         }
