@@ -13,7 +13,7 @@ pipeline {
         maven 'mymaven'
     }
     environment {
-        IMAGE_NAME = 'dgiant/demo-app:jma-2.0'
+        IMAGE_NAME = 'dhgiant/demo-app:jma-2.0'
     }
     stages {
         stage('build app') {
