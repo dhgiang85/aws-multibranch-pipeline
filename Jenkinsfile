@@ -23,7 +23,7 @@ pipeline {
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                         versions:commit'
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    echo ${matcher}
+//                     echo ${matcher}
                     def version = matcher[0][1]
                     env.IMAGE_NAME = "dhgiant/demo-app:jma-${version}-${BUILD_NUMBER}"
                  }
