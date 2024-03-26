@@ -67,7 +67,6 @@ pipeline {
             steps {
                script {
                  sh 'git config --global user.email dhgiang85@gmail.com'
-                 sh 'git config --global user.name dhgiang85'
                  sh 'git remote set-url origin https://github.com/dhgiang85/java-maven-app.git'
                  sh 'git add .'
                  sh 'git commit -m "CI: version bump"'
