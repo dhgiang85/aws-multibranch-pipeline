@@ -10,7 +10,7 @@ library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
 pipeline {
     agent any
     tools {
-        maven 'mymaven-3.9'
+        maven 'mymaven'
     }
     environment {
         IMAGE_NAME = 'dgiant/demo-app:jma-2.0'
