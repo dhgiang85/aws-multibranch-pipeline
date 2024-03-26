@@ -16,6 +16,19 @@ pipeline {
         IMAGE_NAME = 'dhgiant/demo-app:jma-2.0'
     }
     stages {
+       stage('Increase app version') {
+              steps {
+                 script {
+                    sh "mvn mvn build-helper:parse-version version:set \
+                        > -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
+                        versions:commit"
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    echo ${matcher}
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "jma-${version}-${BUILD_NUMBER}"
+                 }
+              }
+        }
         stage('build app') {
             steps {
                script {
@@ -50,5 +63,17 @@ pipeline {
                 }
             }
         }
+        stage('commit updated version') {
+            steps {
+               script {
+                 sh 'git config --global user.email dhgiang85@gmail.com'
+                 sh 'git config --global user.name dhgiang85'
+                 sh 'git remote set-url origin https://github.com/dhgiang85/java-maven-app.git'
+                 sh 'git add .'
+                 sh 'git commit -m "CI: version bump"'
+                 sh 'git push origin HEAD:jenkins-jobs'
+               }
+            }
+      }
     }
 }
